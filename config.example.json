@@ -1,0 +1,5 @@
+{
+    "server_ip": "Server IP as a string",
+    "server_port": 12345,
+    "token": "Discord bot token"
+}
