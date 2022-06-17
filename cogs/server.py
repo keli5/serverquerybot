@@ -16,8 +16,9 @@ class Server(commands.Cog):
         embed = discord.Embed()
         server = JavaServer(config["server_ip"], config["server_port"])
         players = server.status().players.online
+        maxplayers = server.status().players.max
 
-        embed.title = str(players) + " players online"
+        embed.title = f"{str(players)}/{str(maxplayers)} players online"
         if players == 0:
             embed.color = discord.Color.red()
         else:
