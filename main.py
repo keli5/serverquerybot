@@ -13,10 +13,11 @@ async def query_players():
     global last_players
     server = JavaServer(config["server_ip"], config["server_port"])
     players = server.status().players.online
+    pluralized = "players" if players != 1 else "player"
     if players != last_players:
         await client.change_presence(
             activity=discord.Game(
-                name=f"with {f'{str(players)} players' if players>0 else 'nobody :('}"  # noqa: E501
+                name=f"with {f'{str(players)} {pluralized}' if players>0 else 'nobody :('}"  # noqa: E501
             )
         )
         last_players = players
