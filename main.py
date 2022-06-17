@@ -1,9 +1,31 @@
 from mcstatus import JavaServer
 import discord
+from discord.ext import tasks
 import json
 
 client = discord.Client()
 config = json.load(open('config.json'))
+last_players = 0
+
+
+@tasks.loop(seconds=20)
+async def query_players():
+    global last_players
+    server = JavaServer(config["server_ip"], config["server_port"])
+    players = server.status().players.online
+    if players != last_players:
+        await client.change_presence(
+            activity=discord.Game(
+                name=f"with {f'{str(players)} players' if players>0 else 'nobody :('}"  # noqa: E501
+            )
+        )
+        last_players = players
+
+
+@client.event
+async def on_ready():
+    print(f"Logged in as {client.user}")
+    query_players.start()
 
 
 @client.event
