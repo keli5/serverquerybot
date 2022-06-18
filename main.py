@@ -9,7 +9,7 @@ bot = commands.Bot(
 )
 config = json.load(open('config.json'))
 last_players = -1  # -1 so no players is still a change
-cogs_to_load = ["server"]
+cogs_to_load = ["server", "jishaku"]
 
 
 @tasks.loop(seconds=20)
